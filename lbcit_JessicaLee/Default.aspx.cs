@@ -10,16 +10,12 @@ using Newtonsoft.Json.Linq;
 
 public partial class _Default : System.Web.UI.Page
 {
-    //private List<float> data = new List<float>() { };
-    //public List<float> Data { get { return data; } }
-    private List<string> categories = new List<string>() { };
-    public List<string> Categories { get { return categories; } }
+    private List<string> name = new List<string>() { };
+    public List<string> Name { get { return name; } }
 
-    private List<float> data = new List<float>() { };
-    public List<float> Data { get { return data; } }
+    private string [,] contentArr = new string[,] { };
+    public string[,] ContentArr { get { return contentArr; } }
 
-    private Dictionary<string, List<float>> series = new Dictionary<string, List<float>>() { };
-    public Dictionary<string, List<float>> Series { get { return series; } }
     protected void Page_Load(object sender, EventArgs e)
     {
         string json = this.Request_Json();
@@ -54,32 +50,26 @@ public partial class _Default : System.Web.UI.Page
         
         JArray categoriesArr = JArray.Parse(obj["categories"].ToString());
         JArray seriesArr = JArray.Parse(obj["series"].ToString());
-        foreach (var itemObj in categoriesArr)
+        int index = 0;
+        string[,] dataArrStr = new string[categoriesArr.Count, seriesArr.Count + 1];
+        
+        for (int j = 0; j < categoriesArr.Count; j++)
         {
-            categories.Add(itemObj.ToString());
+            dataArrStr[j, index] = categoriesArr[j].ToString();
         }
+        index++;
         foreach (JObject itemObj in seriesArr)
         {
-            //data.Add(itemObj["name"].ToString());
             JArray dataArr = JArray.Parse(itemObj["data"].ToString());
-            foreach (var dataEle in dataArr)
+            for (int j = 0; j < dataArr.Count; j++)
             {
-                //series.Add(itemObj["name"].ToString(), dataEle);
-                data.Add(float.Parse(dataEle.ToString()));
+                dataArrStr[j, index] = dataArr[j].ToString();
             }
-            series.Add(itemObj["name"].ToString(), data);
-            //JArray dataArr = JArray.Parse(obj["data"].ToString());
-            //data.Add(float.Parse(itemObj["data"].ToString()));
-            //series.Add(itemObj["name"].ToString());
-            //JArray dataArr = JArray.Parse(itemObj["data"].ToString());
-            //foreach (var ele in dataArr)
-            //{
-            //    issue.Done = ele.ToString();
-            //}
-            //issue.Author = itemObj["author"]["name"].ToString();
-            //issues.Add(issue);
+            index++;
+            contentArr = dataArrStr;
+            name.Add(itemObj["name"].ToString());
         }
-
-        //IssueListView.ItemsSource = issues;
     }
+    
 }
+

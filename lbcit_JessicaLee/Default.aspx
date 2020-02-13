@@ -5,9 +5,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
     <title>lbcit - Jessica Lee</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
 </head>
 <body>
     <form id="form1" runat="server">
@@ -16,32 +16,22 @@
             <thead>
                 <tr>
                     <th>Month</th>
-                    <%foreach (var s in Series) {%> 
-                        <th><%= s.Key %></th>
+                    <%foreach (var name in Name) {%> 
+                        <th><%= name %></th>
                     <%} %>
                 </tr>
             </thead>
             <tbody>
-                <%foreach (string month in Categories) {%>
+                <%for(int i = 0; i< 12; i++) {%>
                     <tr>
-                        <td><%= month %></td>
-                        <td id ="country"></td>
+                        <%for(int j = 0; j< 5; j++) {%>
+                        <td><%=  ContentArr[i,j] %></td>
+                         <%  } %>
                     </tr>
                 <%  } %>
-
-               
             </tbody>
         </table>
         </div>
     </form>
-    <script src="//code.jquery.com/jquery.min.js"></script>
-    <script>
-
-       <%-- <%foreach (var s in Series) {%> 
-            <%foreach (var data in s.Value) {%> 
-                $('#country > td:last').append('<td><%= data %></td>');
-            <%  } %>
-        <%  } %>--%>
-    </script>
 </body>
 </html>
