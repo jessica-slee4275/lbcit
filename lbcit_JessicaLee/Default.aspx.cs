@@ -25,7 +25,7 @@ public partial class _Default : System.Web.UI.Page
     {
         string result = null;
         string url = "https://www.lbcit.ca/demo/api";
-        string keyVal = "d9658b9d-4f86-491f-bd67-86af0c547a5c";
+        string keyVal = "";
         url = $"{url}/?key={keyVal}";
         try
         {
